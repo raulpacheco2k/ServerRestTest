@@ -15,7 +15,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AppTest {
+class ServeRestTest {
 
     @BeforeAll
     static void beforeAll() {
@@ -25,7 +25,7 @@ class AppTest {
 
     @Test
     void create_account_successfully() {
-        User user = new User(
+        UserRequest userRequest = new UserRequest(
                 Faker.instance().name().fullName(),
                 Faker.instance().internet().emailAddress(),
                 Faker.instance().internet().password(),
@@ -35,7 +35,7 @@ class AppTest {
         given().
                 contentType("application/json").
                 accept("application/json").
-                body(user).
+                body(userRequest).
                 when().
                 post("/usuarios").
                 then().
@@ -46,22 +46,32 @@ class AppTest {
 
     @Test
     void login_successfully() {
-        User user = new User(
+        UserRequest userRequest = new UserRequest(
                 Faker.instance().name().fullName(),
                 Faker.instance().internet().emailAddress(),
                 Faker.instance().internet().password(),
                 "true"
         );
 
+        LoginRequest loginRequest = new LoginRequest(userRequest);
+
         given().
                 contentType("application/json").
                 accept("application/json").
-                body(user).
+                body(userRequest).
                 when().
-                post("/usuarios").
+                post("/usuarios");
+
+        given().
+                contentType("application/json").
+                accept("application/json").
+                body(loginRequest).
+                when().
+                post("/login").
                 then().
                 assertThat().
-                body("message", is("Cadastro realizado com sucesso")).
-                statusCode(HttpStatus.SC_CREATED);
+                body("message", is("Login realizado com sucesso")).
+                statusCode(HttpStatus.SC_OK);
+
     }
 }

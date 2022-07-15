@@ -1,12 +1,12 @@
 package serverresttest;
 
-public class User {
+public class UserRequest {
     String nome;
     String email;
     String password;
     String administrador;
 
-    public User(String nome, String email, String password, String administrador) {
+    public UserRequest(String nome, String email, String password, String administrador) {
         this.nome = nome;
         this.email = email;
         this.password = password;
