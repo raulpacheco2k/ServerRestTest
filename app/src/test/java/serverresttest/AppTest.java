@@ -3,12 +3,65 @@
  */
 package serverresttest;
 
+import com.github.javafaker.Faker;
+import io.restassured.RestAssured;
+import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+
+    @BeforeAll
+    static void beforeAll() {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.baseURI = "https://serverest.dev";
+    }
+
+    @Test
+    void create_account_successfully() {
+        User user = new User(
+                Faker.instance().name().fullName(),
+                Faker.instance().internet().emailAddress(),
+                Faker.instance().internet().password(),
+                "true"
+        );
+
+        given().
+                contentType("application/json").
+                accept("application/json").
+                body(user).
+                when().
+                post("/usuarios").
+                then().
+                assertThat().
+                body("message", is("Cadastro realizado com sucesso")).
+                statusCode(HttpStatus.SC_CREATED);
+    }
+
+    @Test
+    void login_successfully() {
+        User user = new User(
+                Faker.instance().name().fullName(),
+                Faker.instance().internet().emailAddress(),
+                Faker.instance().internet().password(),
+                "true"
+        );
+
+        given().
+                contentType("application/json").
+                accept("application/json").
+                body(user).
+                when().
+                post("/usuarios").
+                then().
+                assertThat().
+                body("message", is("Cadastro realizado com sucesso")).
+                statusCode(HttpStatus.SC_CREATED);
     }
 }
