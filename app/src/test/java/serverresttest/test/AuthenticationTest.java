@@ -33,8 +33,8 @@ class ServeRestTest {
         );
 
         given().
-                contentType("application/json").
-                accept("application/json").
+                contentType(ContentType.JSON).
+                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios").
@@ -56,15 +56,15 @@ class ServeRestTest {
         LoginRequest loginRequest = new LoginRequest(userRequest);
 
         given().
-                contentType("application/json").
-                accept("application/json").
+                contentType(ContentType.JSON).
+                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios");
 
         given().
-                contentType("application/json").
-                accept("application/json").
+                contentType(ContentType.JSON).
+                accept(ContentType.JSON).
                 body(loginRequest).
                 when().
                 post("/login").
