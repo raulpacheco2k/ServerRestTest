@@ -2,6 +2,7 @@ package serverresttest.test;
 
 import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,6 +22,10 @@ class AuthenticationTest {
     static void beforeAll() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = "https://serverest.dev";
+        RestAssured.requestSpecification = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setAccept(ContentType.JSON)
+                .build();
     }
 
     @Test
@@ -33,8 +38,6 @@ class AuthenticationTest {
         );
 
         given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios").
@@ -54,8 +57,6 @@ class AuthenticationTest {
         );
 
         given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios").
@@ -75,8 +76,6 @@ class AuthenticationTest {
         System.out.println(userRequest.toString());
 
         given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios").
@@ -97,15 +96,11 @@ class AuthenticationTest {
         LoginRequest loginRequest = new LoginRequest(userRequest);
 
         given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
                 body(userRequest).
                 when().
                 post("/usuarios");
 
         given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
                 body(loginRequest).
                 when().
                 post("/login").
@@ -113,6 +108,5 @@ class AuthenticationTest {
                 assertThat().
                 body("message", is("Login realizado com sucesso")).
                 statusCode(HttpStatus.SC_OK);
-
     }
 }
