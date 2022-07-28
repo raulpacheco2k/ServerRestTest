@@ -10,7 +10,10 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 class AuthenticationTest extends TestBase {
-    
+
+    private static final String USERS_ENDPOINT = "/usuarios";
+    private static final String LOGIN_ENDPOINT = "/login";
+
     @Test
     void create_account_successfully() {
         UserRequest userRequest = new UserRequest(
@@ -23,7 +26,7 @@ class AuthenticationTest extends TestBase {
         given().
                 body(userRequest).
                 when().
-                post("/usuarios").
+                post(USERS_ENDPOINT).
                 then().
                 assertThat().
                 body("message", is("Cadastro realizado com sucesso")).
@@ -42,7 +45,7 @@ class AuthenticationTest extends TestBase {
         given().
                 body(userRequest).
                 when().
-                post("/usuarios").
+                post(USERS_ENDPOINT).
                 then().
                 assertThat().
                 body("password", is("password não pode ficar em branco"));
@@ -61,7 +64,7 @@ class AuthenticationTest extends TestBase {
         given().
                 body(userRequest).
                 when().
-                post("/usuarios").
+                post(USERS_ENDPOINT).
                 then().
                 assertThat().
                 body("password", is("password é obrigatório"));
@@ -81,12 +84,12 @@ class AuthenticationTest extends TestBase {
         given().
                 body(userRequest).
                 when().
-                post("/usuarios");
+                post(USERS_ENDPOINT);
 
         given().
                 body(loginRequest).
                 when().
-                post("/login").
+                post(LOGIN_ENDPOINT).
                 then().
                 assertThat().
                 body("message", is("Login realizado com sucesso")).
