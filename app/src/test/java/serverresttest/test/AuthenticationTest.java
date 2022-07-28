@@ -1,13 +1,7 @@
 package serverresttest.test;
 
 import com.github.javafaker.Faker;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import serverresttest.requests.LoginRequest;
 import serverresttest.requests.UserRequest;
@@ -15,19 +9,8 @@ import serverresttest.requests.UserRequest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AuthenticationTest {
-
-    @BeforeAll
-    static void beforeAll() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = "https://serverest.dev";
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
-                .build();
-    }
-
+class AuthenticationTest extends TestBase {
+    
     @Test
     void create_account_successfully() {
         UserRequest userRequest = new UserRequest(
