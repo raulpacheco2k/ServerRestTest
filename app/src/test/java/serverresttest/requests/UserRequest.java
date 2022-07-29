@@ -1,6 +1,7 @@
 package serverresttest.requests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.javafaker.Faker;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRequest {
@@ -20,6 +21,15 @@ public class UserRequest {
         this.nome = nome;
         this.email = email;
         this.administrador = administrador;
+    }
+
+    public static UserRequest generateValidUserRequest() {
+        return new UserRequest(
+                Faker.instance().name().fullName(),
+                Faker.instance().internet().emailAddress(),
+                Faker.instance().internet().password(),
+                "true"
+        );
     }
 
     public String getNome() {
