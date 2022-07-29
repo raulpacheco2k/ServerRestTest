@@ -20,7 +20,11 @@ class ProductTest extends TestBase {
     void create_product_successfully() {
         UserRequest userRequest = UserRequest.generateValidUserRequest();
         given().body(userRequest).when().post(USERS_ENDPOINT);
-        String authorization = given().body(new LoginRequest(userRequest)).post(LOGIN_ENDPOINT).path("authorization");
+
+        String authorization = given().body(new LoginRequest(userRequest)).
+                when().post(LOGIN_ENDPOINT).
+                then().assertThat().statusCode(HttpStatus.SC_OK).
+                extract().path("authorization");
 
         ProductRequest product = ProductRequest.generateValidProductRequest();
 
