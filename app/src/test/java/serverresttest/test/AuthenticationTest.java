@@ -11,9 +11,6 @@ import static org.hamcrest.Matchers.is;
 
 class AuthenticationTest extends TestBase {
 
-    private static final String USERS_ENDPOINT = "/usuarios";
-    private static final String LOGIN_ENDPOINT = "/login";
-
     @Test
     void create_account_successfully() {
         UserRequest userRequest = new UserRequest(
