@@ -34,7 +34,7 @@ class AuthenticationTest extends TestBase {
                 then().
                 assertThat().
                 body("message", is("Cadastro realizado com sucesso")).
-                body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/createdUser.json")).
+                body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/successfullyCreated.json")).
                 statusCode(HttpStatus.SC_CREATED);
     }
 
