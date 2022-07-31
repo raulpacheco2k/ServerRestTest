@@ -2,6 +2,7 @@ package serverresttest.test;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,7 +25,10 @@ public class TestBase {
         RestAssured.baseURI = "https://serverest.dev";
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
+                .build();
+
+        RestAssured.responseSpecification = new ResponseSpecBuilder()
+                .expectContentType(ContentType.JSON)
                 .build();
     }
 
