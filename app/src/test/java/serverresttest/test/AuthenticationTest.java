@@ -40,6 +40,8 @@ class AuthenticationTest extends TestBase {
 
     @Test
     void create_account_with_blank_password() {
+        this.userRequest.setPassword("");
+
         given().
                 body(this.userRequest).
                 when().
@@ -51,6 +53,8 @@ class AuthenticationTest extends TestBase {
 
     @Test
     void create_account_without_password() {
+        this.userRequest.setPassword(null);
+
         given().
                 body(this.userRequest).
                 when().
