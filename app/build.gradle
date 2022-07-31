@@ -22,6 +22,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.0.1-jre'
     testImplementation 'org.hamcrest:hamcrest:2.+'
     testImplementation 'io.rest-assured:rest-assured:5.+'
+    testImplementation 'io.rest-assured:json-schema-validator:5.+'
     testImplementation 'com.github.javafaker:javafaker:1.+'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.+'
 }

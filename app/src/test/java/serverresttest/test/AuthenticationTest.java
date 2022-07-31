@@ -1,6 +1,7 @@
 package serverresttest.test;
 
 import com.github.javafaker.Faker;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ class AuthenticationTest extends TestBase {
                 then().
                 assertThat().
                 body("message", is("Cadastro realizado com sucesso")).
+                body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/createdUser.json")).
                 statusCode(HttpStatus.SC_CREATED);
     }
 
