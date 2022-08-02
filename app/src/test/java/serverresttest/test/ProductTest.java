@@ -11,7 +11,7 @@ class ProductTest extends TestBase {
 
     @Test
     void create_product_successfully() {
-        String authorization = getAuthorization();
+        String authorization = getAuthorization(generateUser());
         ProductRequest product = ProductRequest.generateValidProductRequest();
 
         given().

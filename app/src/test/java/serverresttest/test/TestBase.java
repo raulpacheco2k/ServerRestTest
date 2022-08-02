@@ -32,13 +32,16 @@ public class TestBase {
                 .build();
     }
 
-    protected String getAuthorization() {
-        UserRequest userRequest = UserRequest.generateValidUserRequest();
-        given().body(userRequest).when().post(USERS_ENDPOINT);
+    protected String getAuthorization(UserRequest user) {
+        given().body(user).when().post(USERS_ENDPOINT);
 
-        return given().body(new LoginRequest(userRequest)).
+        return given().body(new LoginRequest(user)).
                 when().post(LOGIN_ENDPOINT).
                 then().assertThat().statusCode(HttpStatus.SC_OK).
                 extract().path("authorization");
+    }
+
+    protected UserRequest generateUser() {
+        return UserRequest.generateValidUserRequest();
     }
 }
