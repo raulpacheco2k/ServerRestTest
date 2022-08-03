@@ -1,14 +1,19 @@
 package serverresttest.requests;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.javafaker.Faker;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
     private String nome;
     private String email;
     private String password;
     private String administrador;
+
+    public UserRequest() {
+    }
 
     public UserRequest(String nome, String email, String password, String administrador) {
         this.nome = nome;

@@ -4,10 +4,11 @@ import com.github.javafaker.Faker;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import serverresttest.requests.UserRequest;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 class UserTest extends TestBase {
 
@@ -21,16 +22,24 @@ class UserTest extends TestBase {
     }
 
     @Test
-    void get_valid_user() {
-        String id = given().body(generateUser()).when().post(USERS_ENDPOINT).then().extract().path("_id");
+    void get_user() {
+        String id = given().body(generateUser()).when().post(USERS_ENDPOINT)
+                .then().statusCode(HttpStatus.SC_CREATED)
+                .extract().path("_id");
 
-        given().
+        UserRequest userRequest = given().
                 pathParam("_id", id).
                 when().
                 get(USERS_ENDPOINT + "/{_id}")
                 .then().assertThat().
                 statusCode(HttpStatus.SC_OK)
-                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/getUser.json"));
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/getUser.json")).
+                extract().body().jsonPath().getObject("", UserRequest.class);
+
+        assertThat(userRequest.getNome(), notNullValue());
+        assertThat(userRequest.getEmail(), notNullValue());
+        assertThat(userRequest.getEmail(), containsString("@"));
+        assertThat(userRequest.getPassword(), notNullValue());
     }
 
     @Test
