@@ -1,19 +1,23 @@
 package serverresttest.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.javafaker.Faker;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductRequest {
-    private String nome;
-    private Integer preco;
-    private String descricao;
-    private Integer quantidade;
-
-    public ProductRequest(String bome, Integer preco, String descricao, Integer quantidade) {
-        this.nome = bome;
-        this.preco = preco;
-        this.descricao = descricao;
-        this.quantidade = quantidade;
-    }
+    @JsonProperty("nome")
+    private String name;
+    @JsonProperty("preco")
+    private Integer price;
+    @JsonProperty("descricao")
+    private String description;
+    @JsonProperty("quantidade")
+    private Integer quantity;
 
     public static ProductRequest generateValidProductRequest() {
         return new ProductRequest(
@@ -21,21 +25,5 @@ public class ProductRequest {
                 Faker.instance().number().randomDigitNotZero(),
                 Faker.instance().name().title(),
                 Faker.instance().number().randomDigit());
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public Integer getPreco() {
-        return preco;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
     }
 }
