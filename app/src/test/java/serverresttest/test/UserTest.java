@@ -36,7 +36,7 @@ class UserTest extends TestBase {
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/user/getUser.json")).
                 extract().body().jsonPath().getObject("", UserRequest.class);
 
-        assertThat(userRequest.getNome(), notNullValue());
+        assertThat(userRequest.getName(), notNullValue());
         assertThat(userRequest.getEmail(), notNullValue());
         assertThat(userRequest.getEmail(), containsString("@"));
         assertThat(userRequest.getPassword(), notNullValue());

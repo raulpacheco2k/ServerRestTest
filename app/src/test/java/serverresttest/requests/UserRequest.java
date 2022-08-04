@@ -1,31 +1,33 @@
 package serverresttest.requests;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.github.javafaker.Faker;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
-    private String nome;
+    private String name;
     private String email;
     private String password;
-    private String administrador;
+    private String administrator;
 
     public UserRequest() {
     }
 
-    public UserRequest(String nome, String email, String password, String administrador) {
-        this.nome = nome;
+    public UserRequest(String name, String email, String password, String administrator) {
+        this.name = name;
         this.email = email;
         this.password = password;
-        this.administrador = administrador;
+        this.administrator = administrator;
     }
 
-    public UserRequest(String nome, String email, String administrador) {
-        this.nome = nome;
+    public UserRequest(String name, String email, String administrator) {
+        this.name = name;
         this.email = email;
-        this.administrador = administrador;
+        this.administrator = administrator;
     }
 
     public static UserRequest generateValidUserRequest() {
@@ -37,12 +39,22 @@ public class UserRequest {
         );
     }
 
-    public String getNome() {
-        return nome;
+    @JsonGetter("nome")
+    public String getName() {
+        return name;
+    }
+
+    @JsonSetter("nome")
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -53,7 +65,13 @@ public class UserRequest {
         this.password = password;
     }
 
-    public String getAdministrador() {
-        return administrador;
+    @JsonGetter("administrador")
+    public String getAdministrator() {
+        return administrator;
+    }
+
+    @JsonSetter("administrador")
+    public void setAdministrator(String administrator) {
+        this.administrator = administrator;
     }
 }
