@@ -25,8 +25,8 @@ dependencies {
     testImplementation 'io.rest-assured:json-schema-validator:5.+'
     testImplementation 'com.github.javafaker:javafaker:1.+'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.+'
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.+'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.+'
 }
 
 testing {

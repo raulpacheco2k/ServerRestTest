@@ -1,6 +1,5 @@
 package serverresttest.test;
 
-import com.github.javafaker.Faker;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +16,7 @@ class AuthenticationTest extends TestBase {
 
     @BeforeEach
     void beforeEach() {
-        this.userRequest = new UserRequest(
-                Faker.instance().name().fullName(),
-                Faker.instance().internet().emailAddress(),
-                Faker.instance().internet().password(),
-                "true"
-        );
+        this.userRequest = UserRequest.generateValidUserRequest();
     }
 
     @Test
@@ -48,7 +42,8 @@ class AuthenticationTest extends TestBase {
                 post(USERS_ENDPOINT).
                 then().
                 assertThat().
-                body("password", is("password não pode ficar em branco"));
+                body("password", is("password não pode ficar em branco")).
+                statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -61,7 +56,8 @@ class AuthenticationTest extends TestBase {
                 post(USERS_ENDPOINT).
                 then().
                 assertThat().
-                body("password", is("password é obrigatório"));
+                body("password", is("password é obrigatório")).
+                statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
